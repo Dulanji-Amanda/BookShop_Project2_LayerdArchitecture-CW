@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.stockverse.controller.DashBoardFormController">
+   <children>
+      <ImageView fx:id="img" fitHeight="768.0" fitWidth="1366.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@assest/images/loginPage.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="ap" layoutX="309.0" layoutY="34.0" prefHeight="700.0" prefWidth="1017.0" />
+      <VBox fx:id="vb1" layoutX="51.0" layoutY="35.0" prefHeight="700.0" prefWidth="248.0" style="-fx-background-radius: 30;">
+         <children>
+            <VBox fx:id="vb2" prefHeight="709.0" prefWidth="261.0" style="-fx-background-radius: 17; -fx-background-color: #F0E6F5;">
+               <children>
+                  <AnchorPane fx:id="pane" prefHeight="75.0" prefWidth="248.0">
+                     <children>
+                        <Label fx:id="lbl" alignment="CENTER" layoutX="-8.0" layoutY="-1.0" prefHeight="84.0" prefWidth="258.0" text="STOCK VERSE">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="24.0" />
+                           </font>
+                           <textFill>
+                              <RadialGradient centerX="0.4557522123893805" centerY="0.8484848412600431" radius="0.5">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.04349999874830246" green="0.17534643411636353" blue="0.8700000047683716" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </RadialGradient>
+                           </textFill>
+                           <effect>
+                              <DropShadow radius="8.83" width="16.32" />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <JFXButton fx:id="customerbtn" onAction="#customerbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Customer" textFill="#640a72">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="employeebtn" layoutX="10.0" layoutY="93.0" onAction="#employeebtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Employee" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="itembtn" layoutX="10.0" layoutY="129.0" onAction="#itembtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Item" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="ordersbtn" layoutX="10.0" layoutY="201.0" onAction="#ordersbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Order" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="paymentbtn" layoutX="10.0" layoutY="237.0" onAction="#paymentbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Payment" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="supplierbtn" layoutX="10.0" layoutY="273.0" onAction="#supplierbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Supplier" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="supstockbtn" layoutX="10.0" layoutY="309.0" onAction="#supstockbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Supplier Stock Details" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="salarybtn" layoutX="10.0" layoutY="345.0" onAction="#salarybtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Order Details" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="stockbtn" layoutX="10.0" layoutY="417.0" onAction="#stockbtnOnAction" prefHeight="36.0" prefWidth="250.0" text="Stock" textFill="#640a72">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <HBox prefHeight="78.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="settingId" fitHeight="42.0" fitWidth="50.0" onMouseClicked="#settingOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="15.0" top="15.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@assest/images/setting.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="homeId" fitHeight="40.0" fitWidth="38.0" layoutX="25.0" layoutY="25.0" onMouseClicked="#HomeOnMouseClicked" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="140.0" top="15.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@assest/images/home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

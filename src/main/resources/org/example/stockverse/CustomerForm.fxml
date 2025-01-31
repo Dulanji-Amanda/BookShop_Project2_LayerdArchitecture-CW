@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Apane" prefHeight="700.0" prefWidth="1017.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.stockverse.controller.CustomerFormController">
+   <children>
+      <Label fx:id="custidlbl" layoutX="58.0" layoutY="47.0" prefHeight="42.0" prefWidth="113.0" text="Customer ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblname" layoutX="58.0" layoutY="105.0" prefHeight="42.0" prefWidth="203.0" text="Customer Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbladdress" layoutX="58.0" layoutY="162.0" prefHeight="42.0" prefWidth="118.0" text="Address">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelcontact" layoutX="58.0" layoutY="223.0" prefHeight="32.0" prefWidth="127.0" text="Contact">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblblid" layoutX="624.0" layoutY="51.0" prefHeight="32.0" prefWidth="118.0" text="User ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl" layoutX="210.0" layoutY="52.0" prefHeight="38.0" prefWidth="128.0" />
+      <TextField fx:id="txtcustname" layoutX="210.0" layoutY="110.0" prefHeight="25.0" prefWidth="304.0" />
+      <TextField fx:id="txtaddress" layoutX="210.0" layoutY="171.0" prefHeight="25.0" prefWidth="304.0" />
+      <TextField fx:id="txtcontact" layoutX="210.0" layoutY="223.0" prefHeight="25.0" prefWidth="304.0" />
+      <ComboBox fx:id="combouID" layoutX="731.0" layoutY="56.0" onAction="#combouIDOnAction" prefWidth="150.0" promptText="select user Id" />
+      <Button fx:id="btnU" layoutX="56.0" layoutY="312.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #d497fb;" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnR" layoutX="624.0" layoutY="312.0" mnemonicParsing="false" onAction="#ResetOnAction" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: skyblue;" text="Reset">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnS" layoutX="433.0" layoutY="312.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #51f06b;" text="Save">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnD" layoutX="250.0" layoutY="312.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #f05551;" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tbl" layoutX="53.0" layoutY="383.0" onMouseClicked="#onClickedTable" prefHeight="260.0" prefWidth="917.0">
+         <columns>
+            <TableColumn fx:id="colCid" prefWidth="122.33332824707031" text="Customer ID" />
+            <TableColumn fx:id="colName" prefWidth="235.20001220703125" text="Customer Name" />
+            <TableColumn fx:id="colAddress" prefWidth="200.00003051757812" text="Address" />
+            <TableColumn fx:id="colcontact" prefWidth="214.4000244140625" text="Contact" />
+            <TableColumn fx:id="colUid" minWidth="0.0" prefWidth="143.20001220703125" text="User ID" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnJR" layoutX="806.0" layoutY="312.0" mnemonicParsing="false" onAction="#ReportOnAction" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: pink;" text="Customer Report">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
