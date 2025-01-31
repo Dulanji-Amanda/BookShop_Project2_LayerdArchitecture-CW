@@ -146,5 +146,4 @@ public class LoginFormController {
         ));
         timeline.play();
     }
-
 }

@@ -18,6 +18,7 @@ public class SQLUtil {
             return (T) preparedStatement.executeQuery();
         }else{
             return (T) ((Boolean) (preparedStatement.executeUpdate()>0));
+
         }
     }
 }

@@ -169,6 +169,7 @@ public class OTPFormController {
             rootPane.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource(resource))));
         } catch (IOException e) {
             throw new RuntimeException(e);
+
         }
     }
 }

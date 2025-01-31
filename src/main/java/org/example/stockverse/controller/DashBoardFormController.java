@@ -163,6 +163,5 @@ public class DashBoardFormController implements Initializable {
     @FXML
     void settingOnMouseClicked(MouseEvent event) {
         navigateTo("/org/example/stockverse/SettingForm.fxml");
-
     }
 }

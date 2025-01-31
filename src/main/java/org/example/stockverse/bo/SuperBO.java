@@ -1,4 +1,4 @@
 package org.example.stockverse.bo;
 
-public interface SuperBO {
+public interface SuperBO{
 }

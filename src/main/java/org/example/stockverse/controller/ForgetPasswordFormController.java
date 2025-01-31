@@ -149,6 +149,7 @@ public class ForgetPasswordFormController {
                 ae -> lblError.setText("")
         ));
         timeline.play();
+
     }
 }
 

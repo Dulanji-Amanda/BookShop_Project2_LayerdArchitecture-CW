@@ -13,8 +13,8 @@ public class BOFactory {
     public enum BOTypes {
         USER,
        // CUSTOMER
-        ;    }
-
+        ;
+    }
     public SuperBO getBO(BOTypes type) {
         switch (type) {
             case USER:

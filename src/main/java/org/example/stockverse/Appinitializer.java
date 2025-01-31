@@ -19,5 +19,6 @@ public class Appinitializer extends Application {
         stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/stockverse/LoginForm.fxml")))));
 //        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/stockverse/icon.png"))));
         stage.show();
+
     }
 }

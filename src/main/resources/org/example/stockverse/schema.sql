@@ -106,3 +106,4 @@ CREATE TABLE supplier_stock_detail(
                                       CONSTRAINT FOREIGN KEY (Stock_Id) REFERENCES stock(Stock_Id) on Delete Cascade on Update Cascade,
                                       CONSTRAINT FOREIGN KEY (Sup_Id) REFERENCES supplier(Sup_Id) on Delete Cascade on Update Cascade
 );
+

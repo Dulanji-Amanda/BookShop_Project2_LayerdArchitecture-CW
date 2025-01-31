@@ -120,5 +120,5 @@ public class RegisterFormController {
         ));
         timeline.play();
      }
-    }
+}
 

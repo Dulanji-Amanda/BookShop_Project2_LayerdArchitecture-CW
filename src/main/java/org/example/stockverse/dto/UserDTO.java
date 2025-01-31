@@ -80,5 +80,6 @@ public class UserDTO implements Serializable {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}' ;
+
     }
 }

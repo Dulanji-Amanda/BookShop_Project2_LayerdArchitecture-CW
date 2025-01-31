@@ -59,5 +59,4 @@ public class WelcomeShopFormController {
             throw new RuntimeException(e);
         }
     }
-
 }

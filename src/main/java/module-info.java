@@ -11,7 +11,6 @@ module org.example.stockverse {
     requires javax.mail.api;
     requires javafx.graphics;
 
-
     opens org.example.stockverse to javafx.fxml;
     opens org.example.stockverse.controller to javafx.fxml;
     exports org.example.stockverse;

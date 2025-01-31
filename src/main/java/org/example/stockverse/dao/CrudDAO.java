@@ -16,5 +16,4 @@ public interface CrudDAO <T> extends SuperDAO {
     public ArrayList<T> getAllIds() throws SQLException, ClassNotFoundException ;
 
     public T findById(String selectedId) throws SQLException, ClassNotFoundException;
-
 }

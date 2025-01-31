@@ -7,4 +7,5 @@ import java.sql.SQLException;
 
 public interface UserDAO extends CrudDAO<User> {
     public boolean isEmailExists(String email) throws SQLException, ClassNotFoundException ;
+
 }

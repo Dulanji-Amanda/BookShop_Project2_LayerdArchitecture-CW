@@ -16,5 +16,4 @@ public interface UserBO extends SuperBO {
     public ArrayList<UserDTO> getAllUser() throws SQLException, ClassNotFoundException ;
     public ArrayList<Object> getAllUserIds() throws SQLException, ClassNotFoundException ;
     public User findByUserId(String selectedId) throws SQLException, ClassNotFoundException ;
-
 }

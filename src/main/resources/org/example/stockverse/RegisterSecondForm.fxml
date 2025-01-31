@@ -87,4 +87,5 @@
       </ImageView>
       <Label fx:id="lblError" layoutX="151.0" layoutY="565.0" prefHeight="18.0" prefWidth="521.0" />
    </children>
+
 </AnchorPane>
