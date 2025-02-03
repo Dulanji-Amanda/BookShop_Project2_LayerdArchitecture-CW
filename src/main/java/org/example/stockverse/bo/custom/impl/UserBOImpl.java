@@ -53,17 +53,12 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public ArrayList<Object> getAllUserIds() throws SQLException, ClassNotFoundException {
-        ArrayList<User> users = userDAO.getAllIds();
-        ArrayList<Object> userIds = new ArrayList<>();
-        for (User user : users) {
-            userIds.add(user.getUserId());
-        }
-        return userIds;
+    public ArrayList<String> getAllUserIds() throws SQLException, ClassNotFoundException {
+        return userDAO.getAllIds();
     }
 
     @Override
-    public User findByUserId(String selectedId) throws SQLException, ClassNotFoundException {
+    public User findById(String selectedId) throws SQLException, ClassNotFoundException {
         return userDAO.findById(selectedId);
     }
 }

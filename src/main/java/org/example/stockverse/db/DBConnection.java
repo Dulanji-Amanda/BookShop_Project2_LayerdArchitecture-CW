@@ -1,29 +1,24 @@
 package org.example.stockverse.db;
 
-import lombok.Getter;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Getter
 public class DBConnection {
     private static DBConnection dbConnection;
     private final Connection connection;
-    private final String url = "jdbc:mysql://localhost:3306/bookshop";
-    private final String user = "root";
-    private final String password = "Ijse@1234";
 
-    private DBConnection() throws SQLException {
-        connection = DriverManager.getConnection(url,user,password);
+    private DBConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookshop", "root", "Ijse@1234");
     }
 
-    public static DBConnection getInstance() throws SQLException {
-        if(dbConnection == null){
-            dbConnection= new DBConnection();
-        }
-        return dbConnection;
+    public static DBConnection getDbConnection() throws SQLException, ClassNotFoundException {
+        return dbConnection == null ? dbConnection = new DBConnection() : dbConnection;
+    }
 
+    public Connection getConnection() {
+
+        return connection;
     }
 }
-

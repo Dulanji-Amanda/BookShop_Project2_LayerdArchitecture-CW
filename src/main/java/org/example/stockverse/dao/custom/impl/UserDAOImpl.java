@@ -12,12 +12,12 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     @Override
     public boolean save(User DTO) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO user VALUES (userId,firstName,lastName,username,email,password)",DTO.getUserId(),DTO.getFirstName(),DTO.getLastName(),DTO.getUsername(),DTO.getEmail(),DTO.getPassword());
+        return SQLUtil.execute("INSERT INTO user VALUES (user_Id,firstName,lastName,username,email,password)",DTO.getUserId(),DTO.getFirstName(),DTO.getLastName(),DTO.getUsername(),DTO.getEmail(),DTO.getPassword());
     }
 
     @Override
     public boolean update(User user) throws SQLException, ClassNotFoundException {
-        String query = "UPDATE user SET firstName=?, lastName=?, username=?, email=?, password=? WHERE userId=?";
+        String query = "UPDATE user SET firstName=?, lastName=?, username=?, email=?, password=? WHERE user_Id=?";
         return SQLUtil.execute(query, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword(), user.getUserId());
     }
 
@@ -56,31 +56,23 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public ArrayList<User> getAllIds() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM user");
+    public ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute("SELECT User_Id FROM user");
 
-        ArrayList<User> userList = new ArrayList<>();
+        ArrayList<String> userIds = new ArrayList<>();
 
         while (rst.next()) {
-            User user = new User(
-                    rst.getString("userId"),
-                    rst.getString("firstName"),
-                    rst.getString("lastName"),
-                    rst.getString("username"),
-                    rst.getString("email"),
-                    rst.getString("password")
-            );
-            userList.add(user);
+            userIds.add(rst.getString("User_Id"));
         }
-        return userList;
+        return userIds;
     }
 
     @Override
     public User findById(String selectedId) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM user WHERE userId=?", selectedId);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM user WHERE user_Id=?", selectedId);
         if (rst.next()) {
             return new User(
-                    rst.getString("userId"),
+                    rst.getString("user_Id"),
                     rst.getString("firstName"),
                     rst.getString("lastName"),
                     rst.getString("username"),

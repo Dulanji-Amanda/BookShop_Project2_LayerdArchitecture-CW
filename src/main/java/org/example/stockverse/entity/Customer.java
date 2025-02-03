@@ -1,4 +1,4 @@
-/*package org.example.stockverse.entity;
+package org.example.stockverse.entity;
 
 
 import java.io.Serializable;
@@ -62,4 +62,4 @@ public class Customer implements Serializable {
                 ", User_Id='" + User_Id + '\'' +
                 '}' ;
     }
-}*/
+}

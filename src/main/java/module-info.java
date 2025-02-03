@@ -15,4 +15,5 @@ module org.example.stockverse {
     opens org.example.stockverse.controller to javafx.fxml;
     exports org.example.stockverse;
     exports org.example.stockverse.controller;
+    opens org.example.stockverse.view.tdm;
 }

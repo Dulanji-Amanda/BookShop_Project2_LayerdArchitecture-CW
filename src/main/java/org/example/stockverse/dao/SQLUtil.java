@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class SQLUtil {
     public static <T> T execute(String sql,Object... args) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getInstance().getConnection();
+        Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         for (int i = 0; i < args.length; i++) {
             preparedStatement.setObject(i + 1, args[i]);

@@ -13,7 +13,7 @@ public interface CrudDAO <T> extends SuperDAO {
 
     public List<T> getAll() throws SQLException, ClassNotFoundException ;
 
-    public ArrayList<T> getAllIds() throws SQLException, ClassNotFoundException ;
+    public ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException ;
 
     public T findById(String selectedId) throws SQLException, ClassNotFoundException;
 }

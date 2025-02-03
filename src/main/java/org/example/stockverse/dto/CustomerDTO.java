@@ -1,4 +1,4 @@
-/*package org.example.stockverse.dto;
+package org.example.stockverse.dto;
 
 import java.io.Serializable;
 
@@ -61,4 +61,4 @@ public class CustomerDTO implements Serializable {
                 ", User_Id='" + User_Id + '\'' +
                 '}' ;
     }
-}*/
+}

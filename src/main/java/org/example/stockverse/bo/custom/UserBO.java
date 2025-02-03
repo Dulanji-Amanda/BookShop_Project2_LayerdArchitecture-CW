@@ -14,6 +14,6 @@ public interface UserBO extends SuperBO {
     public boolean isEmailExists(String email) throws SQLException, ClassNotFoundException ;
     public String getNextUserId() throws SQLException, ClassNotFoundException ;
     public ArrayList<UserDTO> getAllUser() throws SQLException, ClassNotFoundException ;
-    public ArrayList<Object> getAllUserIds() throws SQLException, ClassNotFoundException ;
-    public User findByUserId(String selectedId) throws SQLException, ClassNotFoundException ;
+    public ArrayList<String> getAllUserIds() throws SQLException, ClassNotFoundException ;
+    public User findById(String selectedId) throws SQLException, ClassNotFoundException ;
 }

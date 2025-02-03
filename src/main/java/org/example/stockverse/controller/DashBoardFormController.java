@@ -35,6 +35,9 @@ public class DashBoardFormController implements Initializable {
     private ImageView img;
 
     @FXML
+    private JFXButton stockitembtn;
+
+    @FXML
     private JFXButton itembtn;
 
     @FXML

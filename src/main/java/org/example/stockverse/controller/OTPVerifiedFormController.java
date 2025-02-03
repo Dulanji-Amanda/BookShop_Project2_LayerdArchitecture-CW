@@ -76,9 +76,9 @@ public class OTPVerifiedFormController {
     void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         if (areFieldsEmpty()) {
             showErrorMessage("*Required fields cannot be empty.");
-        } /*else if (!isValidPassword(txtPassword.getText())) {
+        } else if (!isValidPassword(txtPassword.getText())) {
             showErrorMessage("*Password must be at least 8 characters long, contain a digit, a lowercase letter, an uppercase letter, and a special character.");
-        }*/ else if (!txtPassword.getText().equals(txtConfirmPassword.getText())) {
+        } else if (!txtPassword.getText().equals(txtConfirmPassword.getText())) {
             showErrorMessage("*Passwords do not match.");
         } else {
             if (updateUser()) {

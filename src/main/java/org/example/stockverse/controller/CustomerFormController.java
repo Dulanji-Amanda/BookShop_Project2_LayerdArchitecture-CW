@@ -1,4 +1,4 @@
-/*package org.example.stockverse.controller;
+package org.example.stockverse.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,8 +14,9 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.example.stockverse.bo.BOFactory;
 import org.example.stockverse.bo.custom.CustomerBO;
 import org.example.stockverse.bo.custom.UserBO;
+import org.example.stockverse.db.DBConnection;
 import org.example.stockverse.dto.CustomerDTO;
-import org.example.stockverse.dto.UserDTO;
+import org.example.stockverse.entity.User;
 import org.example.stockverse.view.tdm.CustomerTM;
 import org.example.stockverse.view.tdm.UserTM;
 
@@ -62,7 +63,7 @@ public class CustomerFormController implements Initializable {
     private TableColumn<CustomerTM, Integer> colcontact;
 
     @FXML
-    private ComboBox<String> combouID;
+    private ComboBox<Object> combouID;
 
     @FXML
     private Label custidlbl;
@@ -94,7 +95,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     private TextField txtcustname;
 
-    public static CustomerBO CustomerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
+    public static CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
 
     public static UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
 
@@ -108,15 +109,15 @@ public class CustomerFormController implements Initializable {
         try {
             loadUserIds();
             refreshPage();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void refreshPage() throws SQLException {
+    private void refreshPage() throws SQLException, ClassNotFoundException {
         refreshTable();
 
-        String nextCustomerID = customerBO.getNextCustomerId();
+        String nextCustomerID = String.valueOf(customerBO.getNextCustomerId());
         lbl.setText(nextCustomerID);
 
         txtcustname.setText("");
@@ -128,18 +129,12 @@ public class CustomerFormController implements Initializable {
         btnU.setDisable(true);
     }
 
-    private void refreshTable() throws SQLException {
+    private void refreshTable() throws SQLException, ClassNotFoundException {
         ArrayList<CustomerDTO> customerDTOS = customerBO.getAllCustomers();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
         for (CustomerDTO customerDTO : customerDTOS) {
-            CustomerTM customerTM = new CustomerTM(
-                    customerDTO.getCust_Id(),
-                    customerDTO.getCust_Name(),
-                    customerDTO.getContact(),
-                    customerDTO.getAddress(),
-                    customerDTO.getUser_Id()
-            );
+            CustomerTM customerTM = new CustomerTM(customerDTO.getCust_Id(), customerDTO.getCust_Name(), customerDTO.getContact(), customerDTO.getAddress(), customerDTO.getUser_Id());
             customerTMS.add(customerTM);
         }
         tbl.setItems(customerTMS);
@@ -149,7 +144,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     void ReportOnAction(ActionEvent event) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            Connection connection = DBConnection.getDbConnection().getConnection();
 
 //            Map<String, Object> parameters = new HashMap<>();
 //            today - 2024 - 02 - 02
@@ -171,7 +166,7 @@ public class CustomerFormController implements Initializable {
 
             // Compile the Jasper report from a JRXML file (report template)
             // The report template is located in the "resources/report" folder of the project
-            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/CustomerReport.jrxml"));
+            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/org/example/stockverse/report/CustomerReport.jrxml"));
 
             // Fill the report with the compiled report object, parameters, and a database connection
             // This prepares the report with real data from the database
@@ -190,24 +185,26 @@ public class CustomerFormController implements Initializable {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Data empty..!");
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
     @FXML
-    void ResetOnAction(ActionEvent event) throws SQLException {
+    void ResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         combouID.setValue(null);
         combouID.setPromptText("Select User_Id");
         refreshPage();
     }
 
     @FXML
-    void SaveOnAction(ActionEvent event) throws SQLException {
+    void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Cust_Id = lbl.getText();
         String Cust_Name = txtcustname.getText();
         Integer Contact = Integer.valueOf(txtcontact.getText());
         String Address = txtaddress.getText();
-        String User_Id = combouID.getValue();
+        Object User_Id = combouID.getValue();
 
         // Define regex patterns for validation
         String namePattern = "^[A-Za-z ]+$";
@@ -240,7 +237,7 @@ public class CustomerFormController implements Initializable {
 
         // Save customer if all fields are valid
         if (isValidName && isValidContact && isValidAddress) {
-            CustomerDTO customerDTO = new CustomerDTO(Cust_Id, Cust_Name, Contact, Address, User_Id);
+            CustomerDTO customerDTO = new CustomerDTO(Cust_Id, Cust_Name, Contact, Address, (String) User_Id);
 
             boolean isSaved = customerBO.saveCustomer(customerDTO);
 
@@ -254,7 +251,7 @@ public class CustomerFormController implements Initializable {
     }
 
     @FXML
-    void deleteOnAction(ActionEvent event) throws SQLException {
+    void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Cust_Id = lbl.getText();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer?", ButtonType.YES, ButtonType.NO);
@@ -272,12 +269,12 @@ public class CustomerFormController implements Initializable {
         }
     }
     @FXML
-    void updateOnAction(ActionEvent event) throws SQLException {
+    void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Cust_Id = lbl.getText();
         String Cust_Name = txtcustname.getText();
         Integer Contact = Integer.valueOf(txtcontact.getText());
         String Address = txtaddress.getText();
-        String User_Id = combouID.getValue();
+        Object User_Id = combouID.getValue();
 
         // Define regex patterns for validation
         String namePattern = "^[A-Za-z ]+$";
@@ -310,7 +307,7 @@ public class CustomerFormController implements Initializable {
 
         // Save customer if all fields are valid
         if (isValidName && isValidContact && isValidAddress) {
-            CustomerDTO customerDTO = new CustomerDTO(Cust_Id, Cust_Name, Contact, Address, User_Id);
+            CustomerDTO customerDTO = new CustomerDTO(Cust_Id, Cust_Name, Contact, Address, (String) User_Id);
 
             boolean isSaved = customerBO.updateCustomer(customerDTO);
 
@@ -342,18 +339,17 @@ public class CustomerFormController implements Initializable {
 
     private void loadUserIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> userIds = userBO.getAllUserIds();
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(userIds);
+        ObservableList<Object> observableList = FXCollections.observableArrayList(userIds);
         combouID.setItems(observableList);
     }
 
     @FXML
-    void combouIDOnAction(ActionEvent event) throws SQLException {
-        String selectedUserId = combouID.getSelectionModel().getSelectedItem();
+    void combouIDOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String selectedUserId = String.valueOf(combouID.getSelectionModel().getSelectedItem());
         if (selectedUserId != null) {
-            UserDTO userDTO = userBO.findById(selectedUserId);
+            User userDTO = userBO.findById(selectedUserId);
         }
     }
 
-}*/
+}
 

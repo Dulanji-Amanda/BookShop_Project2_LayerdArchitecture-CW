@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import org.example.stockverse.bo.BOFactory;
 import org.example.stockverse.bo.custom.UserBO;
 import org.example.stockverse.dto.UserDTO;
 import org.example.stockverse.entity.User;
@@ -46,55 +47,20 @@ public class ForgetPasswordFormController {
    @FXML
    // private Label lblError;
 
-    private UserBO userBO = new UserBO() {
-        @Override
-        public boolean saveUser(UserDTO DTO) throws SQLException, ClassNotFoundException {
-            return false;
-        }
+    public UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
 
-        @Override
-        public boolean updateUser(UserDTO DTO) throws SQLException, ClassNotFoundException {
-            return false;
-        }
+    public static String otpGenerated = "0000";
 
-        @Override
-        public boolean isEmailExists(String email) throws SQLException, ClassNotFoundException {
-            return false;
-        }
-
-        @Override
-        public String getNextUserId() throws SQLException, ClassNotFoundException {
-            return "";
-        }
-
-        @Override
-        public ArrayList<UserDTO> getAllUser() throws SQLException, ClassNotFoundException {
-            return null;
-        }
-
-        @Override
-        public ArrayList<Object> getAllUserIds() throws SQLException, ClassNotFoundException {
-            return null;
-        }
-
-        @Override
-        public User findByUserId(String selectedId) throws SQLException, ClassNotFoundException {
-            return null;
-        }
-    };
-
-   // SendMailController sendMailController = new SendMailController();
+    SendMailController sendMailController = new SendMailController();
 
     @FXML
     public void initialize() {
         txtEmail.requestFocus();
     }
 
-    public static String otpGenerated = "0000";
-
     @FXML
-    void btnSubmitOnAction(ActionEvent event) throws SQLException {
-        /*if (areFieldsEmpty()) {
+    void btnSubmitOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        if (areFieldsEmpty()) {
             showErrorMessage("*Required fields are empty");
         } else if (!isValidEmailAddress()) {
             showErrorMessage("*Invalid email address");
@@ -107,8 +73,8 @@ public class ForgetPasswordFormController {
             //System.out.println("Generated OTP: " + otp);
             sendMailController.sendEmail(recipientEmail, otpGenerated);
 
-            loadUI("/view/otpForm.fxml");
-        }*/
+            loadUI("/com/example/stitchwave/OTPForm.fxml");
+        }
     }
 
     public static String generateOTP() {
@@ -117,9 +83,8 @@ public class ForgetPasswordFormController {
         return String.valueOf(otp);
     }
 
-    private boolean isValidEmailAddress() throws SQLException {
-      //  return userModel.isEmailExists(txtEmail.getText());
-    return false;
+    private boolean isValidEmailAddress() throws SQLException, ClassNotFoundException {
+        return userBO.isEmailExists(txtEmail.getText());
     }
 
     private boolean areFieldsEmpty() {
@@ -128,7 +93,7 @@ public class ForgetPasswordFormController {
 
     @FXML
     void imgBackOnAction(MouseEvent event) {
-        loadUI("/org/example/stockverse/LoginForm.fxml");
+        loadUI("/com/example/stitchwave/LoginForm.fxml");
     }
 
     private void loadUI(String resource) {
@@ -149,7 +114,6 @@ public class ForgetPasswordFormController {
                 ae -> lblError.setText("")
         ));
         timeline.play();
-
     }
 }
 

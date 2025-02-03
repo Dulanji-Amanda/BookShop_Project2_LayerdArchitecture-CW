@@ -11,16 +11,14 @@ public class BOFactory {
     }
 
     public enum BOTypes {
-        USER,
-       // CUSTOMER
-        ;
+        USER,CUSTOMER;
     }
     public SuperBO getBO(BOTypes type) {
         switch (type) {
             case USER:
                 return new UserBOImpl();
-               // case CUSTOMER:
-                //return new CustomerBOImpl();
+                case CUSTOMER:
+                return new CustomerBOImpl();
 
             default:
                 return null;

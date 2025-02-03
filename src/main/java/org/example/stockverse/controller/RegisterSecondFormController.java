@@ -106,14 +106,11 @@ public class RegisterSecondFormController {
     }
 
     private boolean isValidUsername(String username) {
-       // return username.matches(USERNAME_PATTERN);
-    return false;
+        return username.matches(USERNAME_PATTERN);
     }
 
     private boolean isValidPassword(String password) {
-       // return password.matches(PASSWORD_PATTERN);
-        return false;
-
+        return password.matches(PASSWORD_PATTERN);
     }
 
     private void loadUI(String resource) {

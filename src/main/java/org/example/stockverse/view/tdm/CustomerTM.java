@@ -1,16 +1,11 @@
-/*package org.example.stockverse.view.tdm;
+package org.example.stockverse.view.tdm;
 
-import java.io.Serializable;
-
-public class CustomerTM implements Serializable {
+public class CustomerTM implements Comparable<CustomerTM>{
     private String Cust_Id;
     private String Cust_Name;
     private Integer Contact;
     private String Address;
     private String User_Id;
-
-    public CustomerTM() {
-    }
 
     public CustomerTM(String Cust_Id, String Cust_Name, Integer Contact, String Address,String User_Id) {
         this.Cust_Id = Cust_Id;
@@ -61,4 +56,9 @@ public class CustomerTM implements Serializable {
                 ", User_Id='" + User_Id + '\'' +
                 '}' ;
     }
-}*/
+
+    @Override
+    public int compareTo(CustomerTM o) {
+        return Cust_Id.compareTo(o.Cust_Id);
+    }
+}

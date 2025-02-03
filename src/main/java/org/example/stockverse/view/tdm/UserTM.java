@@ -1,17 +1,12 @@
 package org.example.stockverse.view.tdm;
 
-import java.io.Serializable;
-
-public class UserTM implements Serializable {
+public class UserTM implements Comparable<UserTM> {
     private String User_Id;
     private String firstName;
     private String lastName;
     private String username;
     private String email;
     private String password;
-
-    public UserTM() {
-    }
 
     public UserTM(String userId, String firstName, String lastName, String username, String email, String password) {
         this.User_Id = userId;
@@ -81,5 +76,10 @@ public class UserTM implements Serializable {
                 ", password='" + password + '\'' +
                 '}' ;
 
+    }
+
+    @Override
+    public int compareTo(UserTM o) {
+        return User_Id.compareTo(o.User_Id);
     }
 }
