@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ApaneSupplier" prefHeight="700.0" prefWidth="1017.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.stockverse.controller.SupplierFormController">
+   <children>
+      <Label fx:id="SupplierIdlbl" layoutX="58.0" layoutY="47.0" prefHeight="42.0" prefWidth="113.0" text="Supplier ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblnameSupplier" layoutX="58.0" layoutY="105.0" prefHeight="42.0" prefWidth="203.0" text="Supplier Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelcontactSupplier" layoutX="59.0" layoutY="182.0" prefHeight="32.0" prefWidth="112.0" text="Contact">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblblidSupplier" layoutX="624.0" layoutY="51.0" prefHeight="32.0" prefWidth="118.0" text="User ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSupplier" layoutX="210.0" layoutY="52.0" prefHeight="38.0" prefWidth="128.0" />
+      <TextField fx:id="txtSuppliername" layoutX="210.0" layoutY="110.0" prefHeight="25.0" prefWidth="304.0" />
+      <TextField fx:id="txtcontactSupplier" layoutX="208.0" layoutY="189.0" prefHeight="25.0" prefWidth="304.0" />
+      <ComboBox fx:id="combouIDSupplier" layoutX="731.0" layoutY="56.0" onAction="#comboSupOnAction" prefWidth="150.0" promptText="select user Id" />
+      <Button fx:id="btnUSupplier" layoutX="62.0" layoutY="264.0" mnemonicParsing="false" onAction="#updateOnActionSupplier" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #d497fb;" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRSupplier" layoutX="796.0" layoutY="267.0" mnemonicParsing="false" onAction="#ResetOnActionSupplier" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: skyblue;" text="Reset">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSSupplier" layoutX="553.0" layoutY="266.0" mnemonicParsing="false" onAction="#SaveOnActionSupplier" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #51f06b;" text="Save">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDSupplier" layoutX="309.0" layoutY="263.0" mnemonicParsing="false" onAction="#deleteOnActionSupplier" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #f05551;" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblSupplier" layoutX="53.0" layoutY="383.0" onMouseClicked="#SupOnMouseClicked" prefHeight="260.0" prefWidth="891.0">
+         <columns>
+            <TableColumn fx:id="colSupplierid" prefWidth="161.6666717529297" text="Supplier ID" />
+            <TableColumn fx:id="colNameSupplier" prefWidth="305.3333435058594" text="Supplier Name" />
+            <TableColumn fx:id="colcontactSupplier" prefWidth="236.66668701171875" text="Contact" />
+            <TableColumn fx:id="colUidSupplier" minWidth="0.0" prefWidth="187.3333282470703" text="User ID" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

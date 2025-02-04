@@ -69,10 +69,10 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findById(String selectedId) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM user WHERE user_Id=?", selectedId);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM user WHERE User_Id=?", selectedId);
         if (rst.next()) {
             return new User(
-                    rst.getString("user_Id"),
+                    rst.getString("User_Id"),
                     rst.getString("firstName"),
                     rst.getString("lastName"),
                     rst.getString("username"),

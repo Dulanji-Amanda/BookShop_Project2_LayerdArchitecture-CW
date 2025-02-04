@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ApaneStock" prefHeight="700.0" prefWidth="1017.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.stockverse.controller.StockFormController">
+   <children>
+      <Label fx:id="StockIdlbl" layoutX="58.0" layoutY="47.0" prefHeight="42.0" prefWidth="113.0" text="Stock ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblnameStock" layoutX="58.0" layoutY="91.0" prefHeight="42.0" prefWidth="203.0" text="Stock Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="StockUId" layoutX="624.0" layoutY="51.0" prefHeight="32.0" prefWidth="118.0" text="User ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStock" layoutX="210.0" layoutY="52.0" prefHeight="38.0" prefWidth="128.0" />
+      <TextField fx:id="txtstockname" layoutX="210.0" layoutY="100.0" prefHeight="25.0" prefWidth="304.0" />
+      <ComboBox fx:id="combouIDStock" layoutX="731.0" layoutY="56.0" onAction="#StockComboOnAction" prefWidth="150.0" promptText="select user Id" />
+      <Button fx:id="btnUStock" layoutX="85.0" layoutY="247.0" mnemonicParsing="false" onAction="#updateOnActionStock" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #d497fb;" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnRStock" layoutX="805.0" layoutY="248.0" mnemonicParsing="false" onAction="#ResetOnActionStock" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: skyblue;" text="Reset">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSStock" layoutX="558.0" layoutY="247.0" mnemonicParsing="false" onAction="#SaveOnActionStock" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #51f06b;" text="Save">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDStock" layoutX="332.0" layoutY="246.0" mnemonicParsing="false" onAction="#deleteOnActionStock" prefHeight="38.0" prefWidth="161.0" style="-fx-background-color: #f05551;" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblStock" layoutX="61.0" layoutY="340.0" onMouseClicked="#StockOnMouseCliked" prefHeight="303.0" prefWidth="907.0">
+         <columns>
+            <TableColumn fx:id="colStockid" prefWidth="227.00001525878906" text="Stock ID" />
+            <TableColumn fx:id="colNameStock" prefWidth="441.86663818359375" text="Stock Name" />
+            <TableColumn fx:id="colStockUid" minWidth="0.0" prefWidth="238.13336181640625" text="User ID" />
+         </columns>
+      </TableView>
+      <Label layoutX="624.0" layoutY="97.0" prefHeight="32.0" prefWidth="118.0" text="Supplier ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbSupplierId" layoutX="731.0" layoutY="102.0" onAction="#cmbSupplierIdOnAction" prefWidth="150.0" promptText="select supplier Id" />
+      <Label layoutX="56.0" layoutY="148.0" prefHeight="42.0" prefWidth="203.0" text="Date">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateLbl" layoutX="210.0" layoutY="147.0" prefHeight="42.0" prefWidth="203.0" text="1999-12-31">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="624.0" layoutY="152.0" prefHeight="32.0" prefWidth="118.0" text="Item ID">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbItemIds" layoutX="731.0" layoutY="157.0" onAction="#cmbItemIdsOnAction" prefWidth="150.0" promptText="select item Id" />
+      <Label layoutX="56.0" layoutY="188.0" prefHeight="42.0" prefWidth="203.0" text="QTY">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="lblQty" layoutX="210.0" layoutY="198.0" prefHeight="25.0" prefWidth="304.0" />
+   </children>
+</AnchorPane>
