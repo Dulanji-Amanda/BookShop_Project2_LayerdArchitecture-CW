@@ -10,7 +10,7 @@ public class DAOFactory {
         return daoFactory == null ? daoFactory = new DAOFactory() : daoFactory;
     }
     public enum DAOType{
-        USER,CUSTOMER,ITEM,EMPLOYEE
+        USER,CUSTOMER,ITEM,EMPLOYEE,SUPPLIER,STOCK
     }
     public SuperDAO getDAO(DAOType type) {
         switch (type) {
@@ -22,6 +22,10 @@ public class DAOFactory {
             return new ItemDAOImpl();
             case EMPLOYEE:
             return new EmployeeDAOImpl();
+            case SUPPLIER:
+            return new SupplierDAOImpl();
+            case STOCK:
+            return new StockDAOImpl();
 
             default:
                 return null;

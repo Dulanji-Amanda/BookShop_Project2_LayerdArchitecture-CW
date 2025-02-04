@@ -1,4 +1,4 @@
-/*package org.example.stockverse.controller;
+package org.example.stockverse.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -292,5 +292,5 @@ public class StockFormController implements Initializable {
             supplierDTO = supplierBO.findById(selectedSupplierId);
         }
     }
-    }*/
+    }
 

@@ -1,15 +1,10 @@
 package org.example.stockverse.view.tdm;
 
 public class EmployeeTM implements Comparable<EmployeeTM> {
-
-
         private String Emp_Id;
         private String Name;
         private Integer Contact;
         private String User_Id;
-
-        public EmployeeTM() {
-        }
 
         public EmployeeTM(String Emp_Id, String Name, Integer Contact,String User_Id) {
             this.Emp_Id = Emp_Id;

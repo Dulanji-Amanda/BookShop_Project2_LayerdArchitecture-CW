@@ -1,4 +1,4 @@
-/*package org.example.stockverse.controller;
+package org.example.stockverse.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -264,10 +264,10 @@ public class SupplierFormController implements Initializable {
     }
 
     @FXML
-    void comboSupOnAction(ActionEvent event) throws SQLException {
+    void comboSupOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedUserId = combouIDSupplier.getSelectionModel().getSelectedItem();
         if (selectedUserId != null) {
             UserDTO userDTO = userBO.findById(selectedUserId);
         }
     }
-}*/
+}
