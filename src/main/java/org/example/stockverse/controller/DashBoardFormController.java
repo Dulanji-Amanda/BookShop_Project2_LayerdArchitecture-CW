@@ -137,7 +137,6 @@ public class DashBoardFormController implements Initializable {
     @FXML
     void stockbtnOnAction(ActionEvent event) {
         navigateTo("/org/example/stockverse/StockForm.fxml");
-
     }
 
     @FXML

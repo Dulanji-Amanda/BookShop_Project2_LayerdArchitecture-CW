@@ -13,9 +13,9 @@ import org.example.stockverse.bo.BOFactory;
 import org.example.stockverse.bo.custom.EmployeeBO;
 import org.example.stockverse.bo.custom.UserBO;
 import org.example.stockverse.dto.EmployeeDTO;
-import org.example.stockverse.dto.UserDTO;
 import org.example.stockverse.entity.User;
 import org.example.stockverse.view.tdm.EmployeeTM;
+import org.example.stockverse.view.tdm.UserTM;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -41,19 +41,19 @@ public class EmployeeFormController implements Initializable {
         private Button empbtnU;
 
         @FXML
-        private TableColumn<?, ?> empcolCid;
+        private TableColumn<EmployeeTM, String> empcolCid;
 
         @FXML
-        private TableColumn<?, ?> empcolName;
+        private TableColumn<EmployeeTM, String> empcolName;
 
         @FXML
-        private TableColumn<?, ?> empcolUid;
+        private TableColumn<UserTM, String> empcolUid;
 
         @FXML
-        private TableColumn<?, ?> empcolcontact;
+        private TableColumn<EmployeeTM, Integer> empcolcontact;
 
         @FXML
-        private ComboBox<?> empcombouID;
+        private ComboBox<String> empcombouID;
 
         @FXML
         private Label empidlbl;
@@ -71,7 +71,7 @@ public class EmployeeFormController implements Initializable {
         private Label emplblname;
 
         @FXML
-        private TableView<?> emptbl;
+        private TableView<EmployeeTM> emptbl;
 
         @FXML
         private TextField emptxtcontact;
@@ -139,7 +139,7 @@ public class EmployeeFormController implements Initializable {
         String Emp_Id = emplbl.getText();
         String Name = txtempname.getText();
         Integer Contact = Integer.valueOf(emptxtcontact.getText());
-        String User_Id = empcombouID.getValue();
+        String User_Id = (String) empcombouID.getValue();
 
         // Define regex patterns for validation
         String namePattern = "^[A-Za-z ]+$";
@@ -188,7 +188,7 @@ public class EmployeeFormController implements Initializable {
 
             boolean isDeleted = employeeBO.deleteEmployee(Emp_Id);
 
-            if (isDeleted) {
+            if (!isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee deleted...!").show();
                 refreshPage();
             } else {
@@ -202,7 +202,7 @@ public class EmployeeFormController implements Initializable {
         String Emp_Id = emplbl.getText();
         String Name = txtempname.getText();
         Integer Contact = Integer.valueOf(emptxtcontact.getText());
-        String User_Id = empcombouID.getValue();
+        String User_Id = (String) empcombouID.getValue();
 
         // Define regex patterns for validation
         String namePattern = "^[A-Za-z ]+$";
@@ -250,6 +250,7 @@ public class EmployeeFormController implements Initializable {
             txtempname.setText(selectedItem.getName());
             emptxtcontact.setText(String.valueOf(selectedItem.getContact()));
             empcombouID.setValue(selectedItem.getUser_Id());
+
 
             empbtnS.setDisable(true);
             empbtnD.setDisable(false);

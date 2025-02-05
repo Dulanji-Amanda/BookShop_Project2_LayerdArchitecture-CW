@@ -47,17 +47,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     public boolean delete(String Emp_Id) throws SQLException,ClassNotFoundException{
-        return SQLUtil.execute("DELETE FROM customer WHERE Emp_Id=?", Emp_Id);
+        return SQLUtil.execute("DELETE FROM employee WHERE Emp_Id=?", Emp_Id);
 
     }
 
     public ArrayList<String> getAllIds() throws SQLException,ClassNotFoundException{
-        ResultSet rst = SQLUtil.execute("SELECT Cust_Id FROM customer");
+        ResultSet rst = SQLUtil.execute("SELECT Emp_Id FROM employee");
 
         ArrayList<String> customerIds = new ArrayList<>();
 
         while (rst.next()) {
-            customerIds.add(rst.getString("Cust_Id"));
+            customerIds.add(rst.getString("Emp_Id"));
         }
         return customerIds;
     }

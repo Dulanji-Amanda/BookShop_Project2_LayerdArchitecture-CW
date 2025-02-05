@@ -14,11 +14,12 @@ import org.example.stockverse.bo.custom.ItemBO;
 import org.example.stockverse.bo.custom.StockBO;
 import org.example.stockverse.bo.custom.SupplierBO;
 import org.example.stockverse.bo.custom.UserBO;
-import org.example.stockverse.dto.ItemDTO;
 import org.example.stockverse.dto.StockDTO;
-import org.example.stockverse.dto.SupplierDTO;
-import org.example.stockverse.dto.UserDTO;
+import org.example.stockverse.entity.Item;
+import org.example.stockverse.entity.Supplier;
+import org.example.stockverse.entity.User;
 import org.example.stockverse.view.tdm.StockTM;
+import org.example.stockverse.view.tdm.UserTM;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -51,22 +52,22 @@ public class StockFormController implements Initializable {
         private Button btnUStock;
 
         @FXML
-        private ComboBox<?> cmbItemIds;
+        private ComboBox<String> cmbItemIds;
 
         @FXML
-        private ComboBox<?> cmbSupplierId;
+        private ComboBox<String> cmbSupplierId;
 
         @FXML
-        private TableColumn<?, ?> colNameStock;
+        private TableColumn<StockTM, String> colNameStock;
 
         @FXML
-        private TableColumn<?, ?> colStockUid;
+        private TableColumn<UserTM, String> colStockUid;
 
         @FXML
-        private TableColumn<?, ?> colStockid;
+        private TableColumn<StockTM, String> colStockid;
 
         @FXML
-        private ComboBox<?> combouIDStock;
+        private ComboBox<String> combouIDStock;
 
         @FXML
         private Label dateLbl;
@@ -81,17 +82,18 @@ public class StockFormController implements Initializable {
         private Label lblnameStock;
 
         @FXML
-        private TableView<?> tblStock;
+        private TableView<StockTM> tblStock;
 
         @FXML
         private TextField txtstockname;
 
-    public static StockBO stockBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STOCK);
+    Item itemDTO = new Item();
+    Supplier supplierDTO = new Supplier();
+
+    public static StockBO stockBO = (StockBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STOCK);
     public static UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
     public static ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM);
-    ItemDTO itemDTO = new ItemDTO();
-    SupplierDTO supplierDTO = new SupplierDTO();
-    public static SupplierBO supplierBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
+    public static SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colStockid.setCellValueFactory(new PropertyValueFactory<>("Stock_Id"));
@@ -103,12 +105,12 @@ public class StockFormController implements Initializable {
             loadSupplierIds();
             loadItemIds();
             refreshPage();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void refreshPage() throws SQLException {
+    private void refreshPage() throws SQLException, ClassNotFoundException {
         refreshTable();
 
         String nextStockId = stockBO.getNextStockId();
@@ -117,13 +119,12 @@ public class StockFormController implements Initializable {
 
         txtstockname.setText("");
 
-
         btnSStock.setDisable(false);
         btnDStock.setDisable(true);
         btnUStock.setDisable(true);
     }
 
-    private void refreshTable() throws SQLException {
+    private void refreshTable() throws SQLException, ClassNotFoundException {
         ArrayList<StockDTO> stockDTOS = stockBO.getAllStocks();
         ObservableList<StockTM> stockTMS = FXCollections.observableArrayList();
 
@@ -139,7 +140,7 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void ResetOnActionStock(ActionEvent event) throws SQLException {
+    void ResetOnActionStock(ActionEvent event) throws SQLException, ClassNotFoundException {
         combouIDStock.setValue(null);
         combouIDStock.setPromptText("Select User_Id");
         cmbSupplierId.setValue(null);
@@ -150,7 +151,7 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void SaveOnActionStock(ActionEvent event) throws SQLException {
+    void SaveOnActionStock(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Stock_Id = lblStock.getText();
         String Name = txtstockname.getText();
         String User_Id =combouIDStock.getValue();
@@ -185,7 +186,7 @@ public class StockFormController implements Initializable {
         }
     }
     @FXML
-    void deleteOnActionStock(ActionEvent event) throws SQLException {
+    void deleteOnActionStock(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Stock_Id = lblStock.getText();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this Stock?", ButtonType.YES, ButtonType.NO);
@@ -204,7 +205,7 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void updateOnActionStock(ActionEvent event) throws SQLException {
+    void updateOnActionStock(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Stock_Id = lblStock.getText();
         String Name = txtstockname.getText();
         String User_Id = combouIDStock.getValue();
@@ -248,21 +249,21 @@ public class StockFormController implements Initializable {
         }
     }
 
-    private void loadUserIds() throws SQLException {
+    private void loadUserIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> userIds = userBO.getAllUserIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(userIds);
         combouIDStock.setItems(observableList);
     }
 
-    private void loadItemIds() throws SQLException {
+    private void loadItemIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> itemIds = itemBO.getAllItemIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(itemIds);
         cmbItemIds.setItems(observableList);
     }
 
-    private void loadSupplierIds() throws SQLException {
+    private void loadSupplierIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> supplierIds = supplierBO.getAllSupplierIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(supplierIds);
@@ -270,15 +271,15 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void StockComboOnAction(ActionEvent event) throws SQLException {
+    void StockComboOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedUserId = combouIDStock.getSelectionModel().getSelectedItem();
         if (selectedUserId != null) {
-            UserDTO userDTO = userBO.findById(selectedUserId);
+            User userDTO = userBO.findById(selectedUserId);
         }
     }
 
     @FXML
-    void cmbItemIdsOnAction(ActionEvent event) throws SQLException {
+    void cmbItemIdsOnAction(ActionEvent event, Item DTO) throws SQLException, ClassNotFoundException {
         String selectedItemId = cmbItemIds.getSelectionModel().getSelectedItem();
         if (selectedItemId != null) {
             itemDTO = itemBO.findById(selectedItemId);
@@ -286,7 +287,7 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void cmbSupplierIdOnAction(ActionEvent event) throws SQLException {
+    void cmbSupplierIdOnAction(ActionEvent event, Supplier DTO) throws SQLException, ClassNotFoundException {
         String selectedSupplierId = cmbSupplierId.getSelectionModel().getSelectedItem();
         if (selectedSupplierId != null) {
             supplierDTO = supplierBO.findById(selectedSupplierId);

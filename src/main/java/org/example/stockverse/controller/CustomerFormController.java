@@ -260,7 +260,7 @@ public class CustomerFormController implements Initializable {
 
             boolean isDeleted = customerBO.deleteCustomer(Cust_Id);
 
-            if (isDeleted) {
+            if (!isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted...!").show();
                 refreshPage();
             } else {

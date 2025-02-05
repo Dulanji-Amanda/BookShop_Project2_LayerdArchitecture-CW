@@ -45,7 +45,7 @@ public class SupplierBOImpl implements SupplierBO {
         Supplier supplier = new Supplier(supplierDTO.getSup_Id(), supplierDTO.getName(), supplierDTO.getContact(),supplierDTO.getUser_Id());
         return supplierDAO.update(supplier);
     }
-    public ArrayList<String> getAllSupplierIds() throws SQLException,ClassNotFoundException; {
+    public ArrayList<String> getAllSupplierIds() throws SQLException,ClassNotFoundException{
 
         return supplierDAO.getAllIds();
 
@@ -56,7 +56,7 @@ public class SupplierBOImpl implements SupplierBO {
     }
 
 
-    public SupplierDTO findById(String selectedSupId) throws SQLException, ClassNotFoundException {
+    public Supplier findById(String selectedSupId) throws SQLException, ClassNotFoundException {
         return supplierDAO.findById(selectedSupId);
     }
 }

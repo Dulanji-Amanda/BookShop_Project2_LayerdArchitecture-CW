@@ -2,12 +2,12 @@ package org.example.stockverse.dao.custom.impl;
 
 import org.example.stockverse.dao.SQLUtil;
 import org.example.stockverse.dao.custom.SupplierDAO;
-import org.example.stockverse.dto.SupplierDTO;
 import org.example.stockverse.entity.Supplier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SupplierDAOImpl implements SupplierDAO {
     public String getNextId() throws SQLException, ClassNotFoundException {
@@ -23,7 +23,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
     }
 
-    public ArrayList<SupplierDTO> getAll() throws SQLException, ClassNotFoundException {
+    public List<Supplier> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM supplier");
 
         ArrayList<Supplier> supplierDTOS = new ArrayList<>();
@@ -65,7 +65,7 @@ public class SupplierDAOImpl implements SupplierDAO {
     }
 
 
-    public SupplierDTO findById(String selectedSupId) throws SQLException, ClassNotFoundException {
+    public Supplier findById(String selectedSupId) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM supplier WHERE Sup_Id=?", selectedSupId);
 
         ArrayList<Supplier> suppliers = new ArrayList<>();

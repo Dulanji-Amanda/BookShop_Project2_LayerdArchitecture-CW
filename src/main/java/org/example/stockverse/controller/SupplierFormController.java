@@ -10,12 +10,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.example.stockverse.bo.BOFactory;
-import org.example.stockverse.bo.custom.ItemBO;
 import org.example.stockverse.bo.custom.SupplierBO;
 import org.example.stockverse.bo.custom.UserBO;
 import org.example.stockverse.dto.SupplierDTO;
-import org.example.stockverse.dto.UserDTO;
+import org.example.stockverse.entity.User;
 import org.example.stockverse.view.tdm.SupplierTM;
+import org.example.stockverse.view.tdm.UserTM;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -44,19 +44,19 @@ public class SupplierFormController implements Initializable {
     private Button btnUSupplier;
 
     @FXML
-    private TableColumn<?, ?> colNameSupplier;
+    private TableColumn<SupplierTM, String> colNameSupplier;
 
     @FXML
-    private TableColumn<?, ?> colSupplierid;
+    private TableColumn<SupplierTM, String> colSupplierid;
 
     @FXML
-    private TableColumn<?, ?> colUidSupplier;
+    private TableColumn<UserTM, String> colUidSupplier;
 
     @FXML
-    private TableColumn<?, ?> colcontactSupplier;
+    private TableColumn<SupplierTM, Integer> colcontactSupplier;
 
     @FXML
-    private ComboBox<?> combouIDSupplier;
+    private ComboBox<String> combouIDSupplier;
 
     @FXML
     private Label labelcontactSupplier;
@@ -71,7 +71,7 @@ public class SupplierFormController implements Initializable {
     private Label lblnameSupplier;
 
     @FXML
-    private TableView<?> tblSupplier;
+    private TableView<SupplierTM> tblSupplier;
 
     @FXML
     private TextField txtSuppliername;
@@ -79,7 +79,7 @@ public class SupplierFormController implements Initializable {
     @FXML
     private TextField txtcontactSupplier;
 
-    public static SupplierBO supplierBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
+    public static SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
 
     public static UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
 
@@ -92,12 +92,12 @@ public class SupplierFormController implements Initializable {
         try {
             loadUserIds();
             refreshPage();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void refreshPage() throws SQLException {
+    private void refreshPage() throws SQLException, ClassNotFoundException {
         refreshTable();
 
         String nextSupplierId = supplierBO.getNextSupplierId();
@@ -111,7 +111,7 @@ public class SupplierFormController implements Initializable {
         btnUSupplier.setDisable(true);
     }
 
-    private void refreshTable() throws SQLException {
+    private void refreshTable() throws SQLException, ClassNotFoundException {
         ArrayList<SupplierDTO> supplierDTOS = supplierBO.getAllSupplier();
         ObservableList<SupplierTM> supplierTMS = FXCollections.observableArrayList();
 
@@ -128,14 +128,14 @@ public class SupplierFormController implements Initializable {
     }
 
     @FXML
-    void ResetOnActionSupplier(ActionEvent event) throws SQLException {
+    void ResetOnActionSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         combouIDSupplier.setValue(null);
         combouIDSupplier.setPromptText("Select User_Id");
         refreshPage();
     }
 
     @FXML
-    void SaveOnActionSupplier(ActionEvent event)throws SQLException {
+    void SaveOnActionSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Sup_Id = lblSupplier.getText();
         String Name = txtSuppliername.getText();
         Integer Contact = Integer.valueOf(txtcontactSupplier.getText());
@@ -179,7 +179,7 @@ public class SupplierFormController implements Initializable {
     }
 
     @FXML
-    void deleteOnActionSupplier(ActionEvent event)throws SQLException {
+    void deleteOnActionSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Sup_Id = lblSupplier.getText();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this supplier?", ButtonType.YES, ButtonType.NO);
@@ -188,7 +188,7 @@ public class SupplierFormController implements Initializable {
 
             boolean isDeleted = supplierBO.deleteSupplier(Sup_Id);
 
-            if (isDeleted) {
+            if (!isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Supplier deleted...!").show();
                 refreshPage();
             } else {
@@ -198,7 +198,7 @@ public class SupplierFormController implements Initializable {
     }
 
     @FXML
-    void updateOnActionSupplier(ActionEvent event) throws SQLException {
+    void updateOnActionSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         String Sup_Id = lblSupplier.getText();
         String Name = txtSuppliername.getText();
         Integer Contact = Integer.valueOf(txtcontactSupplier.getText());
@@ -243,7 +243,7 @@ public class SupplierFormController implements Initializable {
 
     @FXML
     void SupOnMouseClicked(MouseEvent event) {
-        SupplierTM selectedItem = tblSupplier.getSelectionModel().getSelectedItem();
+        SupplierTM selectedItem = (SupplierTM) tblSupplier.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             lblSupplier.setText(selectedItem.getSup_Id());
 
@@ -256,7 +256,7 @@ public class SupplierFormController implements Initializable {
             btnUSupplier.setDisable(false);
         }
     }
-    private void loadUserIds() throws SQLException {
+    private void loadUserIds() throws SQLException, ClassNotFoundException {
         ArrayList<String> userIds = userBO.getAllUserIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(userIds);
@@ -267,7 +267,7 @@ public class SupplierFormController implements Initializable {
     void comboSupOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedUserId = combouIDSupplier.getSelectionModel().getSelectedItem();
         if (selectedUserId != null) {
-            UserDTO userDTO = userBO.findById(selectedUserId);
+            User userDTO = userBO.findById(selectedUserId);
         }
     }
 }

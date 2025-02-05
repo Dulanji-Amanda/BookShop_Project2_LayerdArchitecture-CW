@@ -14,6 +14,11 @@ public class SupplierDTO implements Serializable {
         this.Contact = Contact;
         this.User_Id =User_Id;
     }
+
+    public SupplierDTO() {
+
+    }
+
     public String getSup_Id() {
         return Sup_Id;
     }
