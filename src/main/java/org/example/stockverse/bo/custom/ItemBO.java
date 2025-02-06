@@ -2,6 +2,7 @@ package org.example.stockverse.bo.custom;
 
 import org.example.stockverse.bo.SuperBO;
 import org.example.stockverse.dto.ItemDTO;
+import org.example.stockverse.dto.OrderDTO;
 import org.example.stockverse.entity.Item;
 
 import java.sql.SQLException;
@@ -24,6 +25,6 @@ public interface ItemBO extends SuperBO {
 
     public void updateItemMinus(String itemId, int qty) throws SQLException, ClassNotFoundException;
 
-    //public boolean saveOrderWithItems(OrderDTO orderDTO, ArrayList<ItemDTO> items, double totalPrice, String text) throws SQLException;
+    public boolean saveOrderWithItems(OrderDTO orderDTO, ArrayList<ItemDTO> items, double totalPrice, String text) throws SQLException;
 }
 
