@@ -1,7 +1,7 @@
 package org.example.stockverse.controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,9 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import org.example.stockverse.bo.BOFactory;
 import org.example.stockverse.bo.custom.CustomerBO;
 import org.example.stockverse.bo.custom.ItemBO;
+import org.example.stockverse.bo.custom.OrderBO;
 import org.example.stockverse.dto.ItemDTO;
+import org.example.stockverse.dto.OrderDTO;
 import org.example.stockverse.entity.Item;
-import org.example.stockverse.view.tdm.CustomerTM;
 import org.example.stockverse.view.tdm.ItemTM;
 
 import java.net.URL;
@@ -31,10 +32,10 @@ public class ItemFormController implements Initializable {
     private Button addItemBtn;
 
     @FXML
-    private ComboBox<CustomerTM> cmbCustomerId;
+    private ComboBox<String> cmbCustomerId;
 
     @FXML
-    private ComboBox<ItemTM> cmbItemId;
+    private ComboBox<String> cmbItemId;
 
     @FXML
     private TableColumn<ItemTM, String> colCiditrm;
@@ -49,21 +50,6 @@ public class ItemFormController implements Initializable {
     private TableColumn<ItemTM, Double> itemcolprice;
 
     @FXML
-    private Label itemidlbl;
-
-    @FXML
-    private Label itemidlbl1;
-
-    @FXML
-    private Label itemlblname;
-
-    @FXML
-    private Label itemlbprice;
-
-    @FXML
-    private TableView<ItemTM> itemtbl;
-
-    @FXML
     private Label lblItemName;
 
     @FXML
@@ -76,22 +62,26 @@ public class ItemFormController implements Initializable {
     private Label lblQty;
 
     @FXML
-    private Button placeOrderBtn;
-
-    @FXML
-    private Button resetbtn;
+    private TableView<ItemTM> itemtbl;
 
     @FXML
     private Label totalPriceLbl;
 
     @FXML
+    private TextField txtQty;
+
+    @FXML
     private TextField txtItemDescription;
 
     @FXML
-    private TextField txtQty;
+    private Button placeOrderBtn;
 
-    public static CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
-    public static ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM);
+    @FXML
+    private Button resetbtn;
+
+    ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM);
+    OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
 
     private final ObservableList<ItemTM> itemList = FXCollections.observableArrayList();
     private final ArrayList<ItemTM> itemListArrayList = new ArrayList<>();
@@ -110,34 +100,40 @@ public class ItemFormController implements Initializable {
             loadCustomerId();
             loadItemId();
             refreshPage();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Initialization Error", "Failed to initialize the form: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void loadItemId() throws SQLException, ClassNotFoundException {
         ArrayList<String> itemIds = itemBO.getAllItemIds();
-        cmbItemId.setItems(FXCollections.observableArrayList());
+        cmbItemId.setItems(FXCollections.observableArrayList(itemIds));
     }
 
     private void loadCustomerId() throws SQLException, ClassNotFoundException {
         ArrayList<String> customerIds = customerBO.getAllCustomerIds();
-        cmbCustomerId.setItems(FXCollections.observableArrayList());
+        cmbCustomerId.setItems(FXCollections.observableArrayList(customerIds));
     }
 
-    private void loadNextOrderId() throws SQLException {
-      // lblOrderID.setText(orderModel.getNextOrderId());
+    private void loadNextOrderId() throws SQLException, ClassNotFoundException {
+        lblOrderID.setText(orderBO.getNextOrderId());
     }
 
     @FXML
     void cmbItemIdOnAction(ActionEvent event) {
         try {
-            String selectedItemId = String.valueOf(cmbItemId.getValue());
+            String selectedItemId = cmbItemId.getValue();
             if (selectedItemId != null) {
                 Item itemDTO = itemBO.findById(selectedItemId);
-                lblItemName.setText(itemDTO.getItem_Name());
-                lblPrice.setText(String.valueOf(itemDTO.getPrice()));
-                lblQty.setText(String.valueOf(itemDTO.getQty()));
+                if (itemDTO != null) {
+                    lblItemName.setText(itemDTO.getItem_Name());
+                    lblPrice.setText(String.valueOf(itemDTO.getPrice()));
+                    lblQty.setText(String.valueOf(itemDTO.getQty()));
+                } else {
+                    showAlert(Alert.AlertType.WARNING, "Item Not Found", "No item found with the selected ID.");
+                }
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to fetch item details: " + e.getMessage());
@@ -156,8 +152,8 @@ public class ItemFormController implements Initializable {
         lblPrice.setText("");
         lblQty.setText("");
         txtQty.setText("");
-        cmbCustomerId.setItems(FXCollections.observableArrayList());
-        cmbItemId.setValue((ItemTM) FXCollections.observableArrayList());
+        cmbCustomerId.setValue(null);
+        cmbItemId.setValue(null);
 
         placeOrderBtn.setDisable(false);
         resetbtn.setDisable(true);
@@ -177,20 +173,6 @@ public class ItemFormController implements Initializable {
     }
 
     @FXML
-    void ItemMouseOnClicked(MouseEvent event) {
-        ItemTM selectedItem = itemtbl.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            //cmbItemId.setValue(selectedItem.getItem_Id());
-            lblItemName.setText(selectedItem.getItem_Name());
-            txtQty.setText(String.valueOf(selectedItem.getQty()));
-            lblPrice.setText(String.valueOf(selectedItem.getPrice()));
-
-            placeOrderBtn.setDisable(true);
-            resetbtn.setDisable(false);
-        }
-    }
-
-    @FXML
     void addItemBtnOnAction(ActionEvent event) {
         try {
             if (cmbItemId.getValue() == null || txtQty.getText().isEmpty()) {
@@ -198,7 +180,7 @@ public class ItemFormController implements Initializable {
                 return;
             }
 
-            String itemId = String.valueOf(cmbItemId.getValue());
+            String itemId = cmbItemId.getValue();
             String itemName = lblItemName.getText();
             double itemPrice = Double.parseDouble(lblPrice.getText());
             int itemQty = Integer.parseInt(txtQty.getText());
@@ -228,22 +210,9 @@ public class ItemFormController implements Initializable {
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.show();
-    }
-
-    @FXML
-    void cmbCustomerIdOnAction(ActionEvent event) {
-
-    }
-
     @FXML
     void placeOrderBtnOnAction(ActionEvent event) {
-      /*  try {
+        try {
             if (cmbCustomerId.getValue() == null || itemListArrayList.isEmpty()) {
                 showAlert(Alert.AlertType.WARNING, "Validation Error", "Please select a customer and add items.");
                 return;
@@ -257,7 +226,7 @@ public class ItemFormController implements Initializable {
             String orderId = lblOrderID.getText();
             OrderDTO orderDTO = new OrderDTO(orderId, "", items.size(), cmbCustomerId.getValue());
 
-            boolean isOrderSaved = itemModel.saveOrderWithItems(orderDTO, items, totalPrice, txtItemDescription.getText());
+            boolean isOrderSaved = itemBO.saveOrderWithItems(orderDTO, items, totalPrice, txtItemDescription.getText());
 
             if (isOrderSaved) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Order placed successfully!");
@@ -268,12 +237,42 @@ public class ItemFormController implements Initializable {
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to place the order: " + e.getMessage());
-        }*/
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void resetbtnOnAction(ActionEvent event) {
-
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to reset the form: " + e.getMessage());
+        }
     }
 
+    @FXML
+    void ItemMouseOnClicked(MouseEvent event) {
+        ItemTM selectedItem = itemtbl.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            cmbItemId.setValue(selectedItem.getItem_Id());
+            lblItemName.setText(selectedItem.getItem_Name());
+            lblPrice.setText(String.valueOf(selectedItem.getPrice()));
+            txtQty.setText(String.valueOf(selectedItem.getQty()));
+
+            placeOrderBtn.setDisable(true);
+            resetbtn.setDisable(false);
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    public void cmbCustomerIdOnAction(ActionEvent actionEvent) {
+    }
 }

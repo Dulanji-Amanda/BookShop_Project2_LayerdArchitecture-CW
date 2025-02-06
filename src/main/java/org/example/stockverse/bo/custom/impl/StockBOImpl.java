@@ -52,8 +52,8 @@ public class StockBOImpl implements StockBO {
 
     @Override
     public boolean deleteStock(String stockId) throws SQLException, ClassNotFoundException {
-        stockDAO.delete(stockId);
-        return false;      }
+        return stockDAO.delete(stockId);
+    }
 
     @Override
     public ArrayList<String> getAllStockIds() throws SQLException, ClassNotFoundException {

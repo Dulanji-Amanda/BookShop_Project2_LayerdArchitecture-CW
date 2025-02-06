@@ -10,11 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.example.stockverse.bo.BOFactory;
-import org.example.stockverse.bo.custom.ItemBO;
-import org.example.stockverse.bo.custom.StockBO;
-import org.example.stockverse.bo.custom.SupplierBO;
-import org.example.stockverse.bo.custom.UserBO;
+import org.example.stockverse.bo.custom.*;
+import org.example.stockverse.dto.ItemDTO;
 import org.example.stockverse.dto.StockDTO;
+import org.example.stockverse.dto.SupplierDTO;
+import org.example.stockverse.dto.UserDTO;
 import org.example.stockverse.entity.Item;
 import org.example.stockverse.entity.Supplier;
 import org.example.stockverse.entity.User;
@@ -30,70 +30,70 @@ import java.util.ResourceBundle;
 
 public class StockFormController implements Initializable {
 
-        @FXML
-        private AnchorPane ApaneStock;
+    @FXML
+    private AnchorPane ApaneStock;
 
-        @FXML
-        private Label StockIdlbl;
+    @FXML
+    private Label StockIdlbl;
 
-        @FXML
-        private Label StockUId;
+    @FXML
+    private Label dateLbl;
 
-        @FXML
-        private Button btnDStock;
+    @FXML
+    private Label StockUId;
 
-        @FXML
-        private Button btnRStock;
+    @FXML
+    private Button btnDStock;
 
-        @FXML
-        private Button btnSStock;
+    @FXML
+    private Button btnRStock;
 
-        @FXML
-        private Button btnUStock;
+    @FXML
+    private Button btnSStock;
 
-        @FXML
-        private ComboBox<String> cmbItemIds;
+    @FXML
+    private Button btnUStock;
 
-        @FXML
-        private ComboBox<String> cmbSupplierId;
+    @FXML
+    private TableColumn<StockTM, String> colNameStock;
 
-        @FXML
-        private TableColumn<StockTM, String> colNameStock;
+    @FXML
+    private TableColumn<UserTM, String> colStockUid;
 
-        @FXML
-        private TableColumn<UserTM, String> colStockUid;
+    @FXML
+    private TableColumn<StockTM, String> colStockid;
 
-        @FXML
-        private TableColumn<StockTM, String> colStockid;
+    @FXML
+    private ComboBox<String> combouIDStock;
 
-        @FXML
-        private ComboBox<String> combouIDStock;
+    @FXML
+    private ComboBox<String> cmbSupplierId;
 
-        @FXML
-        private Label dateLbl;
+    @FXML
+    private ComboBox<String> cmbItemIds;
 
-        @FXML
-        private TextField lblQty;
+    @FXML
+    private Label lblStock;
 
-        @FXML
-        private Label lblStock;
+    @FXML
+    private Label lblnameStock;
 
-        @FXML
-        private Label lblnameStock;
+    @FXML
+    private TextField lblQty;
 
-        @FXML
-        private TableView<StockTM> tblStock;
+    @FXML
+    private TableView<StockTM> tblStock;
 
-        @FXML
-        private TextField txtstockname;
-
-    Item itemDTO = new Item();
-    Supplier supplierDTO = new Supplier();
+    @FXML
+    private TextField txtstockname;
 
     public static StockBO stockBO = (StockBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STOCK);
     public static UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
     public static ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ITEM);
     public static SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
+
+    Item itemDTO = new Item();
+    Supplier supplierDTO = new Supplier();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colStockid.setCellValueFactory(new PropertyValueFactory<>("Stock_Id"));
@@ -105,7 +105,9 @@ public class StockFormController implements Initializable {
             loadSupplierIds();
             loadItemIds();
             refreshPage();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -118,6 +120,7 @@ public class StockFormController implements Initializable {
         dateLbl.setText(String.valueOf(LocalDate.now()));
 
         txtstockname.setText("");
+
 
         btnSStock.setDisable(false);
         btnDStock.setDisable(true);
@@ -279,7 +282,7 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void cmbItemIdsOnAction(ActionEvent event, Item DTO) throws SQLException, ClassNotFoundException {
+    void cmbItemIdsOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedItemId = cmbItemIds.getSelectionModel().getSelectedItem();
         if (selectedItemId != null) {
             itemDTO = itemBO.findById(selectedItemId);
@@ -287,11 +290,10 @@ public class StockFormController implements Initializable {
     }
 
     @FXML
-    void cmbSupplierIdOnAction(ActionEvent event, Supplier DTO) throws SQLException, ClassNotFoundException {
+    void cmbSupplierIdOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedSupplierId = cmbSupplierId.getSelectionModel().getSelectedItem();
         if (selectedSupplierId != null) {
             supplierDTO = supplierBO.findById(selectedSupplierId);
         }
     }
-    }
-
+}

@@ -54,12 +54,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public ArrayList<String> getAllIds() throws SQLException,ClassNotFoundException{
         ResultSet rst = SQLUtil.execute("SELECT Emp_Id FROM employee");
 
-        ArrayList<String> customerIds = new ArrayList<>();
+        ArrayList<String> employeeIds = new ArrayList<>();
 
         while (rst.next()) {
-            customerIds.add(rst.getString("Emp_Id"));
+            employeeIds.add(rst.getString("Emp_Id"));
         }
-        return customerIds;
+        return employeeIds;
     }
 
     public Employee findById(String selectedEmpId) throws SQLException,ClassNotFoundException{

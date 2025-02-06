@@ -47,8 +47,6 @@ public class StockDAOImpl implements StockDAO {
 
     public boolean delete(String Stock_Id) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("DELETE FROM stock WHERE Stock_Id=?", Stock_Id);
-
-
     }
     public ArrayList<String> getAllIds() throws SQLException,ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT Stock_Id FROM stock");

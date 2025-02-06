@@ -73,10 +73,20 @@ public class CustomerDAOImpl implements CustomerDAO {
             );
             customers.add(customer);
         }
-        return customers.get(0);    }
+        return customers.get(0);
+    }
 
     @Override
     public boolean delete(String selectedId) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("DELETE FROM customer WHERE Cust_Id=?", selectedId);
+    }
+
+    @Override
+    public String findCustomerContactById(String customerId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute("SELECT Contact FROM customer WHERE Cust_Id=?", customerId);
+        if (rst.next()) {
+            return rst.getString("Contact");
+        }
+        return null;
     }
 }

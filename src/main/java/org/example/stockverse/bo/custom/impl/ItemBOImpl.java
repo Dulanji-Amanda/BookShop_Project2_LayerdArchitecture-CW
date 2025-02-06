@@ -4,6 +4,7 @@ import org.example.stockverse.bo.custom.ItemBO;
 import org.example.stockverse.dao.DAOFactory;
 import org.example.stockverse.dao.custom.ItemDAO;
 import org.example.stockverse.dto.ItemDTO;
+import org.example.stockverse.dto.OrderDTO;
 import org.example.stockverse.entity.Item;
 
 import java.sql.SQLException;
@@ -60,6 +61,11 @@ public class ItemBOImpl implements ItemBO {
 
 
     public void updateItemMinus(String itemId, int qty) throws SQLException{
+    }
+
+    @Override
+    public boolean saveOrderWithItems(OrderDTO orderDTO, ArrayList<ItemDTO> items, double totalPrice, String text) throws SQLException, ClassNotFoundException {
+        return itemDAO.saveOrderWithItems(orderDTO, items, totalPrice, text);
     }
     //public boolean saveOrderWithItems(OrderDTO orderDTO, ArrayList<ItemDTO> items, double totalPrice, String text) throws SQLException;
 

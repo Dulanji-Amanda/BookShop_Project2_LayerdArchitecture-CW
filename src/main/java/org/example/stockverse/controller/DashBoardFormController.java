@@ -124,14 +124,13 @@ public class DashBoardFormController implements Initializable {
 
     @FXML
     void paymentbtnOnAction(ActionEvent event) {
-        navigateTo("/org/example/stockverse/PaymentForm.fxml");
+        navigateTo("/org/example/stockverse/paymentForm.fxml");
 
     }
 
     @FXML
     void salarybtnOnAction(ActionEvent event) {
         navigateTo("/org/example/stockverse/OrdersForm.fxml");
-
     }
 
     @FXML
@@ -147,7 +146,7 @@ public class DashBoardFormController implements Initializable {
 
     @FXML
     void supstockbtnOnAction(ActionEvent event) {
-        navigateTo("/org/example/stockverse/SupplierStockDetailForm.fxml");
+        navigateTo("/org/example/stockverse/supplierStockDetailForm.fxml");
 
     }
 

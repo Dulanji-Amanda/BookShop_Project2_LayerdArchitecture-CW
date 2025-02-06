@@ -33,11 +33,12 @@ public class WelcomeShopFormController {
 
     @FXML
     void logoutbtnOnAction(ActionEvent event) {
+
         navigateTo();
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/org/example/stockverse/WelcomeShopForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/org/example/stockverse/LoginForm.fxml"));
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/stockverse/assest/images/icon.jpg"))));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
