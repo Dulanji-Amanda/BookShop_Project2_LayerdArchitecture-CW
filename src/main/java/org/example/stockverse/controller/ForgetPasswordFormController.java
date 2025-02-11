@@ -74,6 +74,7 @@ public class ForgetPasswordFormController {
             sendMailController.sendEmail(recipientEmail, otpGenerated);
 
             loadUI("/org/example/stockverse/OTPForm.fxml");
+
         }
     }
 
@@ -94,6 +95,7 @@ public class ForgetPasswordFormController {
     @FXML
     void imgBackOnAction(MouseEvent event) {
         loadUI("/org/example/stockverse/LoginForm.fxml");
+
     }
 
     private void loadUI(String resource) {
