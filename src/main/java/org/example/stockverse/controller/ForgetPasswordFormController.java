@@ -73,7 +73,7 @@ public class ForgetPasswordFormController {
             //System.out.println("Generated OTP: " + otp);
             sendMailController.sendEmail(recipientEmail, otpGenerated);
 
-            loadUI("/com/example/stitchwave/OTPForm.fxml");
+            loadUI("/org/example/stockverse/OTPForm.fxml");
         }
     }
 
@@ -93,7 +93,7 @@ public class ForgetPasswordFormController {
 
     @FXML
     void imgBackOnAction(MouseEvent event) {
-        loadUI("/com/example/stitchwave/LoginForm.fxml");
+        loadUI("/org/example/stockverse/LoginForm.fxml");
     }
 
     private void loadUI(String resource) {
