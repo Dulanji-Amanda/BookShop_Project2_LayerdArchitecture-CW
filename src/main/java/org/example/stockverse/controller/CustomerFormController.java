@@ -146,18 +146,16 @@ public class CustomerFormController implements Initializable {
         try {
             Connection connection = DBConnection.getDbConnection().getConnection();
 
-//            Map<String, Object> parameters = new HashMap<>();
+            Map<String, Object> parameters = new HashMap<>();
 //            today - 2024 - 02 - 02
 //            TODAY -
 
-//            parameters.put("today",LocalDate.now().toString());
 //            <key , value>
 //            Initialize a map to hold the report parameters
 //            These parameters can be used inside the report (like displaying today's date)
 
             // Initialize a map to hold the report parameters
             // These parameters can be used inside the report (like displaying today's date)
-            Map<String, Object> parameters = new HashMap<>();
 
             // Put the current date into the map with two different keys ("today" and "TODAY")
             // You can refer to these keys in the Jasper report if needed
@@ -166,7 +164,7 @@ public class CustomerFormController implements Initializable {
 
             // Compile the Jasper report from a JRXML file (report template)
             // The report template is located in the "resources/report" folder of the project
-            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/org/example/stockverse/report/CustomerReport.jrxml"));
+            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/org/example/stockverse/assest/report/CustomerReport.jrxml"));
 
             // Fill the report with the compiled report object, parameters, and a database connection
             // This prepares the report with real data from the database

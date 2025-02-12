@@ -82,7 +82,10 @@ public class RegisterFormController {
         } else if (!isValidEmail(txtEmail.getText())) {
             showErrorMessage("*Invalid email format.");
         } else {
-            registeringUser.setUserId(userBO.getNextUserId());
+            String nextUserId = userBO.getNextUserId();
+            System.out.println(nextUserId);
+            registeringUser.setUserId(nextUserId);
+            System.out.println(registeringUser.getUserId());
             registeringUser.setEmail(txtEmail.getText());
             registeringUser.setFirstName(txtFirstName.getText());
             registeringUser.setLastName(txtLastName.getText());

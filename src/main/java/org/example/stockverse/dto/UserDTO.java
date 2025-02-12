@@ -23,11 +23,11 @@ public class UserDTO implements Serializable {
     }
 
     public String getUserId() {
-        return User_Id;
+        return this.User_Id;
     }
 
     public void setUserId(String userId) {
-        this.User_Id = User_Id;
+        this.User_Id = userId;
     }
 
     public String getFirstName() {

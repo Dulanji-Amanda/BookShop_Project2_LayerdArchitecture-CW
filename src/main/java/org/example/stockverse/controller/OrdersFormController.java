@@ -10,8 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 import org.example.stockverse.bo.BOFactory;
 import org.example.stockverse.bo.custom.*;
+import org.example.stockverse.db.DBConnection;
 import org.example.stockverse.dto.OrderDTO;
 import org.example.stockverse.dto.PaymentDTO;
 import org.example.stockverse.entity.Customer;
@@ -96,49 +98,51 @@ public class OrdersFormController implements Initializable {
     private TextField txtOrderDesc;
     @FXML
     void OrderRepportOnAction(ActionEvent event) {
-//        try {
-//            Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            Connection connection = DBConnection.getDbConnection().getConnection();
 
-//            Map<String, Object> parameters = new HashMap<>();
+            Map<String, Object> parameters = new HashMap<>();
 //            today - 2024 - 02 - 02
 //            TODAY -
 
-//            parameters.put("today",LocalDate.now().toString());
+            parameters.put("today",LocalDate.now().toString());
 //            <key , value>
 //            Initialize a map to hold the report parameters
 //            These parameters can be used inside the report (like displaying today's date)
 
-        // Initialize a map to hold the report parameters
-        // These parameters can be used inside the report (like displaying today's date)
+//         Initialize a map to hold the report parameters
+//         These parameters can be used inside the report (like displaying today's date)
 //            Map<String, Object> parameters = new HashMap<>();
 
-        // Put the current date into the map with two different keys ("today" and "TODAY")
+//         Put the current date into the map with two different keys ("today" and "TODAY")
 //             You can refer to these keys in the Jasper report if needed
 //            parameters.put("today", LocalDate.now().toString());
-//            parameters.put("TODAY", LocalDate.now().toString());
+            parameters.put("TODAY", LocalDate.now().toString());
 
-        // Compile the Jasper report from a JRXML file (report template)
-        // The report template is located in the "resources/report" folder of the project
-//            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/reports/OrderDetailReport.jrxml"));
+//         Compile the Jasper report from a JRXML file (report template)
+//         The report template is located in the "resources/report" folder of the project
+            JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/org/example/stockverse/assest/report/OrderDetailReport.jrxml"));
 
-        // Fill the report with the compiled report object, parameters, and a database connection
-        // This prepares the report with real data from the database
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(
-//                    jasperReport,
-//                    parameters,
-//                    connection
-//            );
+//         Fill the report with the compiled report object, parameters, and a database connection
+//         This prepares the report with real data from the database
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters,
+                    connection
+            );
 
-        // Display the report in a viewer (this is a built-in JasperReports viewer)
-        // 'false' indicates that the window should not close the entire application when closed
-//            JasperViewer.viewReport(jasperPrint, false);
-//        } catch (JRException e) {
-//            new Alert(Alert.AlertType.ERROR, "Fail to load report..!");
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            new Alert(Alert.AlertType.ERROR, "Data empty..!");
-//            e.printStackTrace();
-//        }
+//         Display the report in a viewer (this is a built-in JasperReports viewer)
+//         'false' indicates that the window should not close the entire application when closed
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to load report..!");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Data empty..!");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ORDER);

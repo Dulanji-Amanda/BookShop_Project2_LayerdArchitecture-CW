@@ -12,12 +12,18 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     @Override
     public boolean save(User DTO) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO user VALUES (user_Id,firstName,lastName,username,email,password)",DTO.getUserId(),DTO.getFirstName(),DTO.getLastName(),DTO.getUsername(),DTO.getEmail(),DTO.getPassword());
+        return SQLUtil.execute("INSERT INTO user (User_Id, firstName, lastName, username, email, password) VALUES (?, ?, ?, ?, ?, ?)",
+                DTO.getUserId(),
+                DTO.getFirstName(),
+                DTO.getLastName(),
+                DTO.getUsername(),
+                DTO.getEmail(),
+                DTO.getPassword());
     }
 
     @Override
     public boolean update(User user) throws SQLException, ClassNotFoundException {
-        String query = "UPDATE user SET firstName=?, lastName=?, username=?, email=?, password=? WHERE user_Id=?";
+        String query = "UPDATE user SET firstName=?, lastName=?, username=?, email=?, password=? WHERE User_Id=?";
         return SQLUtil.execute(query, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword(), user.getUserId());
     }
 
@@ -29,11 +35,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public String getNextId() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT userId FROM user ORDER BY userId DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT User_Id FROM user ORDER BY User_Id DESC LIMIT 1;");
         if (rst.next()){
             return rst.getString(1);
         }
-        return null;    }
+        return null;
+    }
 
     @Override
     public List<User> getAll() throws SQLException, ClassNotFoundException {
